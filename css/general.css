@@ -1,0 +1,333 @@
+/*---------------------------------------- Reset everything ------------------------------------------ */
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p,
+a, cite, strong,
+ol, ul, li,
+fieldset, form, label, legend,
+tbody, tfoot, thead, tr {
+	border: 0;
+	font-family: inherit;
+	font-size: 100%;
+	font-style: inherit;
+	font-weight: inherit;
+	margin: 0;
+	outline: 0;
+	padding: 0;
+	vertical-align: baseline;
+}
+html {
+	font-size: 62.5%;
+	overflow-y: scroll;
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+}
+body {
+	background: #fff;
+}
+footer,
+header,
+nav,
+section {
+	display: block;
+}
+ol, ul {
+	list-style: none;
+}
+a:focus {
+	outline: thin dotted;
+}
+a:hover,
+a:active {
+	outline: 0;
+}
+a img {
+	border: 0;
+}
+.clearboth {
+	width: 100%;
+	clear: both;
+	display: block;
+}
+.screen-reader-text {	
+}
+
+/* everywhere */
+body,
+button,
+input,
+select,
+textarea {
+	color: #3d3d3d;	
+	font-family: Open Sans, Helvetica, Arial;
+	font-size: 12px;
+	line-height: 1.8;
+	word-wrap: break-word;
+}
+body {
+	background: #eee;
+}
+#body-core {
+	background: white;
+	min-width: 320px;
+	overflow: hidden;
+}
+
+/* Responsive screen width */
+body.layout-fixed,
+body.layout-fixed #body-core,
+body.layout-fixed #site-header,
+body.layout-fixed #header-sticky,
+body.layout-fixed #notification { 
+	min-width: 960px;
+}
+
+/* Headings */
+h1,h2,h3,h4,h5,h6 {
+	color: #232323;
+	clear: both;
+	margin: 0 0 0.8em;
+	font-family: Open Sans, Helvetica, Arial;
+	line-height: 1.5;
+	-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	-ms-transition: all 0.3s ease;
+	-o-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+}
+h1 {
+	font-size: 28px;
+}
+h2 {
+	font-size: 24px;
+}
+h3 {
+	font-size: 20px;
+}
+h4 {
+	font-size: 16px;
+}
+h5 {
+	font-size: 14px;
+}
+h6 {
+	font-size: 12px;
+}
+hr {
+	background-color: #E6E6E6;
+	border: 0;
+	height: 1px;
+	margin-bottom: 1.5em;
+}
+
+/* Text elements */
+p {
+	margin-bottom: 20px;
+}
+ul, ol {
+	margin: 0 0 20px 20px;
+}
+ul {
+	list-style: disc;
+}
+ol {
+	list-style: decimal;
+}
+ul ul, ol ol, ul ol, ol ul {
+	margin-bottom: 0;
+	margin-left: 1.5em;
+}
+b, strong {
+	font-weight: bold;
+}
+button,
+input,
+select,
+textarea {
+	font-size: 100%;
+	margin: 0;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	box-sizing: border-box;
+	vertical-align: baseline;
+	*vertical-align: middle;
+}
+button,
+input {
+	line-height: inherit;
+	*overflow: visible;
+}
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+	cursor: pointer;
+	-webkit-appearance: button;
+	padding: 10px 24px;
+}
+input.searchsubmit {
+	padding: 6px 15px;
+}
+input[type="checkbox"],
+input[type="radio"] {
+	padding: 0;
+}
+input[type="search"] {
+	-webkit-appearance: textfield;
+}
+input[type="search"]::-webkit-search-decoration {
+	-webkit-appearance: none;
+}
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+	border: 0;
+	padding: 0;
+}
+input[type=text],
+input[type=email],
+input[type=password],
+input[type=search],
+input[type=tel],
+select,
+textarea {
+	background: white;
+	border: 1px solid #DDD;
+	padding: 10px 20px;
+}
+input[type=text]:focus,
+input[type=email]:focus,
+input[type=password]:focus,
+input[type=search]:focus,
+input[type=tel]:focus,
+select:focus,
+textarea:focus {
+	background: #fff;
+}
+textarea {
+	overflow: auto;
+	vertical-align: top;
+	width: 100%;
+}
+
+/*----------------------------------- My styles ----------------------------------------- */
+/* main page */
+body {
+	background: -moz-linear-gradient(#dcdcdc, rgb(201,201,146));
+}
+header {
+	background-color: #dcdcdc;/*#265*/
+	color: #eee;
+}
+header li {
+	list-style-type: none;
+	display: inline;
+	padding: 0 10px 0 10px;
+}
+header li a, header li a:visited {
+	text-decoration: none;
+	color: #333;
+	font-weight: bold;
+}
+#lang-menu {
+	text-align: right;
+}
+#lang-menu img {
+	width: 10px;
+	margin-right: 3px;
+}
+#loginout {
+	width: 100%;
+	text-align: right;
+	margin-top: -20px;
+	margin-right: 10px;
+	color: #333;
+}
+#logo {
+	display: inline;
+	font-size: 2.8em;
+	line-height: 3.0em;
+	padding-left: 25px;
+}
+#logo img {
+	width: 200px;
+}
+#logo a, #logo a:visited {
+	color: #c71585;
+	font-weight: bold;
+	text-decoration: none;
+}
+.nav .main {
+	display: inline;
+}
+
+footer {
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	width: 100%;
+	background-color: rgb(201,201,146);
+}
+footer li {
+	display: inline;
+	margin: 0 10px -8px 10px;
+}
+footer h4 {
+	display: inline;
+	color: #c72585;
+}
+
+.content {
+	/*background-color: #b7b5b5;*/
+	padding: 0 20px 50px 20px;
+	margin-bottom: 50px;
+	min-height: 100%;
+}
+.content ul li {
+	list-style-type: none;
+}
+.posticon {
+	width: 50px;
+	margin-right: 20px;
+}
+.postimage, .postcontent {
+	display: table-cell;
+	vertical-align: top;
+}
+.postimage img {
+	width: 40px;
+	margin-right: 10px;
+}
+.flogo {
+	max-width: 300px;
+}
+fieldset {
+	border: 1px solid #333;
+	width: 30%;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 8px;
+}
+label {
+	display: block;
+}
+
+input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+	cursor: pointer;
+	-webkit-appearance: button;
+	padding: 6px 24px;
+}
+input[type=text],
+input[type=email],
+input[type=password],
+input[type=search],
+input[type=tel],
+select,
+textarea {
+	background: white;
+	border: 1px solid #b7b5b5;
+	padding: 2px 5px;
+	width: 100%;
+}
