@@ -1,0 +1,154 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tiblogs\n"
+"POT-Creation-Date: 2017-02-20 12:57+0100\n"
+"PO-Revision-Date: 2017-02-20 14:35+0100\n"
+"Last-Translator: kai <kai@terminal21.de>\n"
+"Language-Team: kai\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: english\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+# basic
+msgid "language code"
+msgstr "de_DE"
+
+msgid "language name"
+msgstr "deutsch"
+
+msgid "direction"
+msgstr "ltr"
+
+# login
+msgid "sign up"
+msgstr "registrieren"
+
+msgid "login"
+msgstr "anmelden"
+
+msgid "You are logged in as: "
+msgstr "Du bist angemeldet als: "
+
+msgid "logout"
+msgstr "abmelden"
+
+msgid "forgot password?"
+msgstr "Passwort vergessen?"
+
+msgid "my stuff"
+msgstr "meine Blogs"
+
+# main navigation
+msgid "Home"
+msgstr "Home"
+
+msgid "Blogs"
+msgstr "Blogs"
+
+# footer navigation
+msgid "tiBlogs"
+msgstr "tiBlogs"
+
+msgid "contact"
+msgstr "Kontakt"
+
+msgid "imprint"
+msgstr "Impressum"
+
+msgid "data use"
+msgstr "Datenschutz"
+
+msgid "f.a.q."
+msgstr "f.a.q."
+
+msgid "supported by"
+msgstr "Untertützt von"
+
+# system reply
+msgid "We are sorry. We couldn't find a page matching your request."
+msgstr ""
+"Es tut uns leid, wir haben keine passende Seite zu deiner Anfrage gefunden."
+
+# start page
+msgid "Welcome to tiBlogs"
+msgstr "Wilkommen auf tiBlogs"
+
+msgid "accessible media content about trans*, inter* and non-binary lives"
+msgstr ""
+"barrierearme Medieninhalte zu trans*, inter* und geschlechtervielfältigen "
+"Leben"
+
+msgid "start title"
+msgstr ""
+
+# contents
+# common
+msgid "Title"
+msgstr "Titel"
+
+msgid "Description"
+msgstr "Beschreibung"
+
+msgid "save changes"
+msgstr "Änderungen speichern"
+
+# blogs
+msgid "These are all blogs"
+msgstr "Das sind alle Blogs"
+
+msgid "You have no blogs yet."
+msgstr "Du hast noch keine Blogs."
+
+msgid "my own blogs"
+msgstr "Meine eigenen Blogs"
+
+msgid "Blogs I can contribute to"
+msgstr "Blogs, in denen ich veröffentlichen kann"
+
+msgid "start new blog"
+msgstr "neuen Blog starten"
+
+msgid "edit blog details"
+msgstr "Blog Details bearbeiten"
+
+# posts
+msgid "create new post"
+msgstr "Neuen Beitrag anlegen"
+
+msgid "edit post"
+msgstr "Beitrag bearbeiten"
+
+msgid "delete post"
+msgstr "Beitrag löschen"
+
+msgid "author"
+msgstr "Autor_in(nen)"
+
+msgid "publisher"
+msgstr "Herausgeber_in(nen)"
+
+msgid "number of pages"
+msgstr "Seitenzahl"
+
+msgid "ISBN"
+msgstr "ISBN"
+
+# users
+msgid "All users"
+msgstr "Alle Nutzer_innen"
+
+msgid "I want to create a new account"
+msgstr "Ich möchte einen neuen Account anlegen"
+
+msgid "I want to change my personal data"
+msgstr "Ich möchte meine persönlichen Daten ändern"
+
+# gfx alt texts
+msgid "tiBlogs logo"
+msgstr "tiBlogs logo"

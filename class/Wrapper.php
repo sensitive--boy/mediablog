@@ -15,7 +15,7 @@ class Wrapper{
 	protected function __construct(){
 		$this->pdo = new PDO(DB_PGSQL_DSN, DB_USER, DB_PASS);
 		$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
-		echo "database connection up.";
+		#echo "database connection up.";
 	}
 	
 	public function __destruct(){}
@@ -33,7 +33,7 @@ class Wrapper{
 		return "ich bin der Wrapper, jo!";
 	}
 	
-	function run($sql, $params = NULL){
+	public function run($sql, $params = NULL){
    	$stmt = $this->pdo->prepare($sql);
    	$stmt->execute($params);
    	return $stmt; 
@@ -53,7 +53,29 @@ class Wrapper{
 		$sql .= "VALUES (".implode(", ",$repl).")";
 		echo $sql;
 		$stmt = $this->pdo->prepare($sql);
-		$stmt->execute($vals);
+		$result = $stmt->execute($vals);
+		$id = $this->pdo->lastInsertId($table.'_id_seq');
+		#print_r($result);
+		return $id;
+	}
+	
+	public function insertWithoutId($table, $fields_arr){
+		echo "Wrapper: _insertWithoutId";
+		$keys = array();
+		$vals = array();
+		
+		foreach($fields_arr as $key=>$val){
+			$keys[] = $key;
+			$repl[] = "?";
+			$vals[] = $val;
+		}
+		$sql = "INSERT INTO ".$table." (".implode(", ",$keys).") ";
+		$sql .= "VALUES (".implode(", ",$repl).")";
+		echo $sql;
+		$stmt = $this->pdo->prepare($sql);
+		$result = $stmt->execute($vals);
+		#print_r($result);
+		return $result;
 	}
 	
 	public function selectAll($table, $sortopt=null){
@@ -65,7 +87,8 @@ class Wrapper{
 		return $resultobj->fetchAll();
 	}
 	
-	public function selectWhere($table, $conditions, $operator="AND"){
+	
+	public function selectWhere($table, $sortopt, $conditions, $operator="AND"){
 		if(!(strtoupper($operator)=== "AND" || strtoupper($operator)=== "OR")){
 			echo "FEHLER: Operator kann nur AND oder OR sein.";
 		} else {
@@ -76,13 +99,72 @@ class Wrapper{
 				$vals[] = $value;
 				
 		}
-		print_r($vals);
+		#print_r($vals);
 		$sql .= implode(" ".$operator." ", $fields);
+		if($sortopt) {
+			$sql .= " ORDER BY ".$sortopt;
+		}
 		$stmt = $this->pdo->prepare($sql);
    	$stmt->execute($vals);
-		echo "Wrapper selectWhere abgeschlossen.";
 		return $stmt;
 		}
+	}
+	
+	public function updateWhere($table, $columnvals, $conditions, $operator="AND"){
+		if(!(strtoupper($operator)=== "AND" || strtoupper($operator)=== "OR")){
+			echo "FEHLER: Operator kann nur AND oder OR sein.";
+		} else {
+			$columns = array();
+			$values = array();
+			$condkeys = array();
+			$condvals = array();
+			$sql = "UPDATE $table SET ";
+			foreach($columnvals as $col=>$val){
+				$columns[] = $col."=?";
+				$values[] = $val;
+			}
+			$sql .= implode(", ", $columns);
+			$sql .= " WHERE ";
+			foreach($conditions as $key => $value){
+				$condkeys[] = $key." = ?";
+				$condvals[] = $value;
+				
+			}
+		$sql .= implode(" ".$operator." ", $condkeys);
+			$v = array_merge($values, $condvals);
+		}
+		$stmt = $this->pdo->prepare($sql);
+   	$stmt = $stmt->execute($v);
+		return $stmt;
+	}
+	
+	function deleteWhere($table, $conditions, $operator='AND'){
+		$keys = array();
+		$vals = array();
+		
+		foreach($conditions as $key => $value){
+				$keys[] = $key." = ?";
+				$vals[] = $value;
+				
+		}
+		$sql = "DELETE FROM ".$table." WHERE ";
+		$sql .= implode(" ".$operator." ", $keys);
+		echo $sql;
+		print_r($vals);
+		$stmt = $this->pdo->prepare($sql);
+		$result = $stmt->execute($vals);
+		print_r($result);
+		return $result;
+	}
+	
+	function beginTransaction() {
+		$this->pdo->beginTransaction();
+	}
+	function commit() {
+		$this->pdo->commit();
+	}
+	function rollback() {
+		$this->pdo->rollBack();
 	}
 
 }

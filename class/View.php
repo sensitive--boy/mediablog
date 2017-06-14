@@ -15,6 +15,9 @@ class View {
 	// Array für Variablen, die an Template übergeben werden
 	private $contents = array();
 	
+	public function __construct($path) {
+		$this->path = $path;
+	}
 	
 	public function setTemplate($template){
 		$this->template = $template;

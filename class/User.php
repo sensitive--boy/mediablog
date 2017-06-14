@@ -20,10 +20,10 @@ class User{
 		$this->email = $email;
 		$this->isEditor = $isEditor;
 	}
-	public function getID(){
+	public function getId(){
 		return $this->u_id;
 	}
-	public function setID($id){
+	public function setId($id){
 		$this->u_id = $id;
 	}
 	public function setName($n){

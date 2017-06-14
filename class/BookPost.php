@@ -38,8 +38,30 @@ class BookPost{
 	public function getIsbn() {
 		return $this->isbn;
 	}
+	public function setTitle($title) {
+		$this->title = $title;
+	}
+	public function setDescription($text) {
+		$this->description = $text;
+	}
+	public function setAuthor($author) {
+		$this->author = $author;
+	}
+	public function setPublisher($publisher) {
+		$this->publisher = $publisher;
+	}
+	public function setPages($pages) {
+		$this->pages = $pages;
+	}
+	public function setIsbn($isbn){
+		$this->isbn = $isbn;
+	}
 	public function getPostType(){
 		return "book";
+	}
+	public function getColumnnames() {
+		$names = array('title', 'description', 'author', 'publisher', 'pages', 'isbn');
+		return $names;
 	}
 
 }

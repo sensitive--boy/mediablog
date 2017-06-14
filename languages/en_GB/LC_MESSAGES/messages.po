@@ -1,0 +1,151 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tiblogs\n"
+"POT-Creation-Date: 2017-02-20 12:57+0100\n"
+"PO-Revision-Date: 2017-02-20 14:13+0100\n"
+"Last-Translator: kai <kai@terminal21.de>\n"
+"Language-Team: kai\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: english\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+# basic
+msgid "language code"
+msgstr "en_GB"
+
+msgid "language name"
+msgstr "english"
+
+msgid "direction"
+msgstr "ltr"
+
+# login
+msgid "sign up"
+msgstr "sign up"
+
+msgid "login"
+msgstr "login"
+
+msgid "You are logged in as: "
+msgstr "You are logged in as: "
+
+msgid "logout"
+msgstr "logout"
+
+msgid "forgot password?"
+msgstr "forgot password?"
+
+msgid "my stuff"
+msgstr "my stuff"
+
+# main navigation
+msgid "Home"
+msgstr "Home"
+
+msgid "Blogs"
+msgstr "Blogs"
+
+# footer navigation
+msgid "tiBlogs"
+msgstr "tiBlogs"
+
+msgid "contact"
+msgstr "contact"
+
+msgid "imprint"
+msgstr "imprint"
+
+msgid "data use"
+msgstr "data use"
+
+msgid "f.a.q."
+msgstr "f.a.q."
+
+msgid "supported by"
+msgstr "supported by"
+
+# system reply
+msgid "We are sorry. We couldn't find a page matching your request."
+msgstr "We are sorry. We couldn't find a page matching your request."
+
+# start page
+msgid "Welcome to tiBlogs"
+msgstr "Welcome to tiBlogs"
+
+msgid "accessible media content about trans*, inter* and non-binary lives"
+msgstr "accessible media content about trans*, inter* and non-binary lives"
+
+msgid "start title"
+msgstr ""
+
+# contents
+# common
+msgid "Title"
+msgstr "Title"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "save changes"
+msgstr "save changes"
+
+# blogs
+msgid "These are all blogs"
+msgstr "These are all blogs"
+
+msgid "You have no blogs yet."
+msgstr "You have no blogs yet"
+
+msgid "my own blogs"
+msgstr "my own blogs"
+
+msgid "Blogs I can contribute to"
+msgstr "Blogs I can contribute to"
+
+msgid "start new blog"
+msgstr "start new blog"
+
+msgid "edit blog details"
+msgstr "edit blog details"
+
+# posts
+msgid "create new post"
+msgstr "create new post"
+
+msgid "edit post"
+msgstr "edit post"
+
+msgid "delete post"
+msgstr "delete post"
+
+msgid "author"
+msgstr "author(s)"
+
+msgid "publisher"
+msgstr "publisher"
+
+msgid "number of pages"
+msgstr "number of pages"
+
+msgid "ISBN"
+msgstr "ISBN"
+
+# users
+msgid "All users"
+msgstr "All users"
+
+msgid "I want to create a new account"
+msgstr "I want to create a new account"
+
+msgid "I want to change my personal data"
+msgstr "I want to change my personal data"
+
+# gfx alt texts
+msgid "tiBlogs logo"
+msgstr "tiBlogs logo"

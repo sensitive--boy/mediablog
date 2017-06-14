@@ -12,6 +12,7 @@
 require_once 'class/Controller.php';
 require_once 'nixda/settings.php';
 require_once 'class/TiAutoloader.php';
+include_once 'include/functions.php';
 spl_autoload_register("TiAutoloader::classLoader");
 class PagesController{
 	public static $notices = array();
@@ -28,10 +29,10 @@ class PagesController{
 	
 	// a list of the controllers we have and their actions
   	// we consider those "allowed" values
-  	private $controllers = array('pages' => ['home', 'error', 'contact', 'faq', 'privacy', 'funding', 'aftersignup', 'afterlogin'],
-  							  'blogs' => ['index', 'show', 'new', 'edit'],
-  							  'user' => ['index', 'show', 'new', 'signup', 'login'],
-  							  'posts' => ['index', 'show', 'new', 'edit']
+  	private $controllers = array('pages' => ['home', 'error', 'contact', 'imprint', 'faq', 'privacy', 'funding'],
+  							  'blogs' => ['index', 'show', 'create', 'edit', 'mystuff', 'new', 'update'],
+  							  'user' => ['index', 'show', 'new'],
+  							  'posts' => ['index', 'show', 'create', 'update', 'edit', 'save', delete]
   							 );
 	
 	public function __construct($request){
@@ -42,7 +43,6 @@ class PagesController{
 		$this->language = !empty($request['lang']) ? $request['lang'] : (isset($_SESSION['lang']) ? $_SESSION['lang'] : LANGUAGE);
 		$this->layout = !empty($request['layout']) ? $request['layout'] : 'standard';
 		$this->displayMode = !empty($request['displayMode']) ? $request['displayMode'] : 'fullVision';
-		$this->customStyle = !empty($request['customStyle']) ? $request['customStyle'] : '';
 		$this->controller = !empty($request['controller']) ? $request['controller'] : 'pages';
 		$this->action = !empty($request['action']) ? $request['action'] : 'home';
 	}
@@ -51,10 +51,10 @@ class PagesController{
 	}
 	
 	public function logout(){
-		echo "logout";
 		$_SESSION['logged_in'] = false;
-		$_SESSION = array();
 		session_destroy();
+		$_SESSION = array();
+		echo "logout";
 	}
 	
 	public function display(){		
@@ -63,18 +63,30 @@ class PagesController{
 		$this->view->putContents('lang', $this->language);
 		$this->view->putContents('layout', $this->model->getLayout($this->layout));
 		$this->view->putContents('displayMode',$this->model->getDisplayMode($this->displayMode));
-		$this->view->putContents('customStyle', $this->model->getCustomStyle($this->customStyle));
-		
-		$_SESSION['hallo'] = "Ich bins. kennste mich?";
 		
 		if(isset($this->request['logout'])) { $this->logout(); }
-				
+		if(isset($this->request['formSubmit'])) {
+			switch($this->request['formSubmit']) {
+				case 'signup':
+					$uc = new UserController($this->request);
+					$user = $uc->signup($this->request['username'],  $this->request['email'], $this->request['pw2']);
+					$this->view->putContents('user', $user);
+					break;
+				case 'login':
+					$uc = new UserController($this->request);
+					$user = $uc->login($this->request['username'],  $this->request['email'], $this->request['pass']);
+					$this->view->putContents('user', $user);
+					break;
+				default:
+			}
+		}
+		
 		
 		// check that the requested controller and action are both allowed
   		// if someone tries to access something else he will be redirected to the error action
   		if (array_key_exists($this->controller, $this->controllers)) {
     		if (in_array($this->action, $this->controllers[$this->controller])) {
-    			
+    			    			    			
     			// if requested controller is pages load template directly
     			if($this->controller == 'pages') {
     					$this->view->setTemplate($this->action);
@@ -85,6 +97,7 @@ class PagesController{
     				switch($this->controller){
     					case 'blogs':
     						$c = new BlogsController($this->request);
+    						$this->view->putContents('customStyle', $this->model->getCustomStyle($this->request['id']));
     						break;
     					case 'user':
     						$c = new UserController($this->request);
@@ -110,8 +123,18 @@ class PagesController{
  	   // variable for the output string
 		$page = "";
 		
+		if(!$this->view->readContents()['user']) {
+			$um = new UserModel();
+			$user = $um->createUser();
+			$this->view->putContents('user', $user);
+		}
+		
 		// set and load header template
-		$this->view->setHeader('big_header');
+		if($this->controller === 'blogs' && $this->action === 'show') {
+			$this->view->setHeader('small_header');
+		} else {
+			$this->view->setHeader('big_header');
+		}
 		$this->view->putContents('title', $title);
 		$page .= $this->view->loadHeader();
 		

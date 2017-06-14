@@ -9,7 +9,7 @@
 *************/
 class PageView {
 	// Pfad zu den Template-Dateien
-	private $path = 'templates';
+	private $path = 'templates/pages';
 	// Standard header:
 	private $header = 'big_header';
 	// Standard Template:
@@ -32,6 +32,9 @@ class PageView {
 	
 	public function putContents($key, $value){
 		$this->contents[$key] = $value;
+	}
+	public function readContents() {
+		return $this->contents;
 	}
 
 	

@@ -1,0 +1,131 @@
+
+/*The container that holds the dropdown items*/
+.mcs-container{
+    	width:100%;
+	overflow:hidden;
+        background:#eee;
+        box-sizing: border-box;
+        display:none;
+        position: relative;
+        padding:3px;
+        clear:both;
+}
+
+/*The menu items (options)*/
+.mcs-open,
+.mcs-item{
+	box-sizing: border-box;
+	background:#eee;
+	color:#222;    
+	text-decoration: none;
+	width:20%;
+	float:left;
+	/*height: 50px;
+	line-height: 50px;
+	text-align: center;*/
+   
+        
+}
+
+.mcs-open{
+    border: 0;
+        text-align: left;
+        padding: 0 10px 0 10px;
+	width:100%;
+        margin-top:20px;
+}
+
+.mcs-open.open{
+    background:#dcdcdc;
+    color:#777;
+}
+.mcs-open.open:hover{
+    background:#eee;
+    color:#555;
+}
+
+.mcs-item.active, .mcs-open:hover{
+	background:rgb(191,191,136);
+	color:#222;
+	/*border:1px solid #222;*/
+}
+
+
+.mcs-item:hover,
+.mcs-open:hover{
+background:rgb(201,201,146);
+
+cursor:pointer;
+}
+
+/*Hide Select Form Control*/
+.hidden{
+	visibility: hidden;
+	height: 0px;
+	width:0px;
+	position:absolute;
+}
+
+/*Clear class used to push float- can just point to an exsisting clear class
+.clear{
+	display:block;
+	clear:both;
+}*/
+
+
+.wrapper{
+    width:580px;
+    padding:20px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+header h1{
+    font-size:3em;
+    color:#ffffff;
+    font-family: 'Ubuntu Condensed', sans-serif;
+}
+h2{
+       font-size:2em;
+    color:#ffffff;
+    font-family: 'Ubuntu Condensed', sans-serif;
+}
+
+.mcs-open{
+        /*font-family: 'Ubuntu Condensed', sans-serif;*/
+        font-size:1em;
+}           
+
+.mcs-item{
+    font-size:0.9em;
+      /*  -moz-transform: scale(0.95) rotate(0deg) translateX(0px) translateY(0px) skewX(0deg) skewY(0deg);
+        -webkit-transform: scale(0.95) rotate(0deg) translateX(0px) translateY(0px) skewX(0deg) skewY(0deg);
+        -o-transform: scale(0.95) rotate(0deg) translateX(0px) translateY(0px) skewX(0deg) skewY(0deg);
+        -ms-transform: scale(0.95) rotate(0deg) translateX(0px) translateY(0px) skewX(0deg) skewY(0deg);
+        transform: scale(0.95) rotate(0deg) translateX(0px) translateY(0px) skewX(0deg) skewY(0deg);
+        -webkit-transition: all 300ms ease;
+        -moz-transition: all 300ms ease;
+        -ms-transition: all 300ms ease;
+        -o-transition: all 300ms ease;
+        transition: all 300ms ease;
+        -webkit-border-radius: 3px 3px 3px 3px;
+        border-radius: 3px 3px 3px 3px;
+        text-shadow: -1px 1px 1px #141314;
+        -webkit-box-shadow: 0 0 4px 1px rgba(0,0,0,0.4);
+        box-shadow: 0 0 4px 1px rgba(0,0,0,0.4);*/
+}
+/*.mcs-item:hover{
+        -moz-transform: scale(1) rotate(-3deg) translateX(0px) translateY(0px) skewX(0deg) skewY(0deg);
+        -webkit-transform: scale(1) rotate(-3deg) translateX(0px) translateY(0px) skewX(0deg) skewY(0deg);
+        -o-transform: scale(1) rotate(-3deg) translateX(0px) translateY(0px) skewX(0deg) skewY(0deg);
+        -ms-transform: scale(1) rotate(-3deg) translateX(0px) translateY(0px) skewX(0deg) skewY(0deg);
+        transform: scale(1) rotate(-3deg) translateX(0px) translateY(0px) skewX(0deg) skewY(0deg);
+}
+.mcs-item.active{
+    text-shadow: 0 0 0 #FFF;
+}*/
+.mcs-item.active:hover{
+    background:rgb(201,201,146);
+    
+}
+

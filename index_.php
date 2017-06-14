@@ -17,15 +17,13 @@ function __autoload($classname){
 }
 
 $request = array_merge($_GET, $_POST);
-echo 'index_.php:<br />';
 echo 'REQUEST: ';
 print_r($request);
+echo '<br>Query_string: '.$_SERVER['QUERY_STRING'];
 echo '<br />Session: ';
 print_r($_SESSION);
 
 $p = new PagesController($request);
-echo "PagesController erzeugt.";
-
 echo $p->display();
 
 ?>

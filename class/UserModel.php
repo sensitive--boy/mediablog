@@ -24,14 +24,14 @@ class UserModel {
 		return $user;
 	}
 	
-	public function getUserFromLogin($n, $p, $e){
-		echo "called getUserFromLogin.";
+	public function getUserFromLogin($n, $e, $p){
+		echo "called getUserFromLogin with: ".$n." und ".$e." und ".$p;
 		$conditions=array();
 		$conditions['username'] = $n;
 		$conditions['email'] = $e;
 		#$conditions['verified'] = true;
 		
-		$result = $this->wrapper->selectWhere($this->table, $conditions, "AND")->fetch();
+		$result = $this->wrapper->selectWhere($this->table, null, $conditions, "AND")->fetch();
 		echo "Passwort: ".$result['pw'];
 		if(password_verify($p, $result['pw'])) {
 			echo "User gefunden.";
@@ -46,8 +46,8 @@ class UserModel {
 	
 	
 	public function registrateUser($n, $p, $email){
-		$n = substr($n, 0, 20);
-		$user = $this->getUserFromLogin($n, $p, $email);
+		#$n = substr($n, 0, 20);
+		$user = $this->getUserFromLogin($n, $email, $p);
 		if($user != null){
 					echo "User allready exists";
 			#PagesController::$notices[] = "Diese Username ist bereits mit dieser email registriert. Bitte anderen Usernamen oder Email wählen.";
@@ -59,7 +59,7 @@ class UserModel {
 			$this->wrapper->insert($this->table, $data);
 			echo "User wurde eingetragen.";
 			print_r($data);
-			return $this->getUserFromLogin($n, $p, $email); 
+			return $this->getUserFromLogin($n, $email, $p); 
 		}
 	}
 	
