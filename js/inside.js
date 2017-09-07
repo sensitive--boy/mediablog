@@ -7,8 +7,10 @@ var modalOverlay = document.querySelector('.modal-overlay');
 
 var modalToggle1 = document.querySelector('#ttlupload');
 var modalToggle2 = document.querySelector('#bgupload');
-modalToggle1.addEventListener('click', function(){ openModal('ttlupload');});
-modalToggle2.addEventListener('click', function(){ openModal('bgupload');});
+var modalToggle3 = document.querySelector('#videoupload');
+if(modalToggle1)modalToggle1.addEventListener('click', function(){ openModal('ttlupload');});
+if(modalToggle2)modalToggle2.addEventListener('click', function(){ openModal('bgupload');});
+if(modalToggle3)modalToggle3.addEventListener('click', function(){ openModal('videoupload');});
 
 function openModal(m) {
 	var modal = document.querySelector('#'+m+'-form');

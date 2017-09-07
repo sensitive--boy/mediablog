@@ -26,7 +26,6 @@ class BlogsController{
 		echo "<br>Es ist ein BlogsController!";
 		$this->model = new BlogModel();
 		$this->styleModel = new StyleModel();
-
 		$this->view = new View($this->templatePath);
 		$this->request = $request;
 		$this->action = $this->request['action'];
@@ -46,8 +45,10 @@ class BlogsController{
 			case 'show':
 				echo $this->action;
 				$blog = $this->model->getBlog($this->request['id']);
+				echo "Ha! ein Bloog!";
 				$pm = new PostModel();
 				$contributions = $pm->getContributionsByBlog($this->request['id']);
+				echo "got contributions ::::";
 				$posts = $pm->getPostsByBlogId($this->request['id']);
 				$style = $this->styleModel->getStyleByBlogId($this->request['id']);
 				$this->view->putContents('blog', $blog);
@@ -73,11 +74,15 @@ class BlogsController{
 				if(!empty($blog)) {
 					$this->view->putContents('blog', $blog);
 					$this->view->putContents('style', $style);
+					$this->view->putContents('stylefolder', $this->styleModel->findOrCreateStyleFolder($blog->getId()));
 					$this->view->putContents('hfonts', $this->styleModel->getHeadlinefontsByLanguage($this->language));
+					echo "<br>fellow 3";
 					$this->view->putContents('tfonts', $this->styleModel->getTextfontsByLanguage($this->language));
+					echo "<br>fellow 4";
 					$this->title = " | ".$blog->getTitle();
 					$this->template = 'blog_edit';
 				} else {
+					echo "<br>fellow 19";
 					$this->title = " | Error";
 					$this->template = 'error';
 				}
@@ -86,14 +91,9 @@ class BlogsController{
 			echo "hello update";
 				$blog = $this->model->updateBlog($this->request);
 				if($blog) {
-					echo " ccc blog updated";
 					$b = $this->model->getBlog($this->request['id']);
-					echo " got Blog";
 					$s = $this->styleModel->getStyleByBlogId($b->getId());
-					echo "got style for blog";
-					$this->styleModel->writeStylesheet($s);
-					echo "stylesheet done";
-					
+					$this->styleModel->writeStylesheet($s);					
 					header("Location: http://localhost/tiblogs/index_.php?controller=blogs&action=show&id=".$this->request['id']."&lang=".$this->language);
 				} else {
 					PagesController::$notices[] = "Edit did not work. Please try again.";

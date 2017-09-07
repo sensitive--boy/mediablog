@@ -15,6 +15,7 @@ $message = "";
 $ttitle = $this->contents['post']->getTitle();
 $text = $this->contents['post']->getDescription();
 $id = $this->contents['post']->getId();
+$keys = isset($this->contents['keywords']) ? implode(", ", $this->contents['keywords']) : "";
 $p_langs = $this->contents['p_langs'];
 $split = $p_langs.length;
 
@@ -37,10 +38,12 @@ $f2 = "
     			<option value='other' dir='auto'>other</option>
     		</select>
     		</div>
-    		<label for='title' dir='auto'>Title:</label>
+    		<label for='title' dir='auto'>".$txt_title.":</label>
     		<input class='strong' type='text' id='title' name='title' dir='auto' value='".$ttitle."' autofocus /><br /><br />
-    		<label for='description' dir='auto'>Text:</label>
+    		<label for='description' dir='auto'>".$txt_text.":</label>
     		<textarea id='description' name='description' dir='auto'>".$text."</textarea>
+    		<label for='keywords' dir='auto'>".$txt_keywords.":</label>
+    		<input type='text' dir='auto' name='keywords' id='keywords' value='".$keys."' /><br>
     		<input type='hidden' name='blog_id' value='".$blog_id."' />
     		<input type='hidden' name ='id' value='".$id."' />
     		<input type='hidden' name='user' value='".$user."' /><br><br>

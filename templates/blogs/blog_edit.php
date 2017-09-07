@@ -8,8 +8,9 @@
 *************/
 session_start();
 $lang = $this->contents['lang'];
-include 'languages/'.$lang.'.php';
-include '../include/functions.php';
+include_once 'languages/'.$lang.'.php';
+include_once '../include/functions.php';
+include_once '../nixda/settings.php';
 $message = array("Meldungen:");
 $allowed_image_types = array('jpg', 'jpeg', 'png', 'gif');
 
@@ -23,8 +24,7 @@ $use_bgpattern = $this->contents['style']->getBgpattern();
 $himage = "";
 $bimage = "";
 
-$target_dir = '0--x--0/b'.$id.'/';
-
+$target_dir = MEDIAFOLDER."b".$id."/";
 
 if(isset($_POST['upload'])) {
 	$imageFileType = $_FILES['imageToLoad']['type'];
@@ -55,19 +55,19 @@ if(isset($_POST['upload'])) {
    	echo "Sorry, your file is too large.";
     	$uploadOk = 0;
 	}
-	
+	echo "still here - file size checked. ";
 	// Allow certain file formats
 	if(!in_array(explode("/", $imageFileType)[1], $allowed_image_types)) {
    	 echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
     	 $uploadOk = 0;
 	}
-	
+	echo "still here - file format checked. ";
 	// Check if $uploadOk is set to 0 by an error
 	if ($uploadOk == 0) {
    	 $message.push("Sorry, your file was not uploaded.");
 	// if everything is ok, try to upload file
 	} else {
-		echo $target_file;
+		echo "taget: ".$target_file;
    	 if (move_uploaded_file($_FILES["imageToLoad"]["tmp_name"], $target_file)) {
        	 echo "The file ". basename( $_FILES["imageToLoad"]["name"]). " has been uploaded.";
        	 $uploaded = 1;
@@ -82,6 +82,7 @@ if(isset($_POST['upload'])) {
 				}
        	 
     	 } else {
+    	 	echo "not uploaded ";
         	 $message->push("Sorry, there was an error uploading your file.");
     	 }
     }
@@ -90,7 +91,6 @@ if(isset($_POST['upload'])) {
 // find image files
 $himage = findFileWithType($target_dir, 'header-image', $allowed_image_types);
 $bimage = findFileWithType($target_dir, 'background-image', $allowed_image_types);
-
 
 echo "<div class='content'>";
 echo "<form role='form' action='?controller=blogs&action=update&lang=".$lang."' method='post'>";

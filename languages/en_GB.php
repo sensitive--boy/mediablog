@@ -74,14 +74,21 @@ $txt_create_post = 'Create new post';
 $txt_post_languages = 'What languages will be used in your post?';
 $txt_edit_post = 'edit post';
 $txt_delete_post = 'delete this post';
-$txt_written_by = 'written by';
 
+$txt_written_by = 'written by';
+$txt_published = 'published';
+$txt_published_at = 'published on';
 $txt_title = 'title';
+$txt_text = 'text';
 $txt_description = 'description';
+$txt_keywords = 'keywords (please separate by comma)';
 $txt_author = 'author(s)';
 $txt_publisher = 'publisher';
 $txt_pages = 'number of pages';
 $txt_isbn = 'ISBN';
+
+$txt_upload_video = 'Upload video';
+$txt_send_video = 'Upload this video';
 
 $txt_save_changes = 'save changes';
 

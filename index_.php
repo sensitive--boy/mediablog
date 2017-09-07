@@ -15,15 +15,15 @@ function __autoload($classname){
 	} else $pfad="";
 	require_once($pfad.$classname.".php");
 }
-
+session_start();
 $request = array_merge($_GET, $_POST);
 echo 'REQUEST: ';
 print_r($request);
-echo '<br>Query_string: '.$_SERVER['QUERY_STRING'];
-echo '<br />Session: ';
-print_r($_SESSION);
-
+#phpinfo();
+#echo '<br>Query_string: '.$_SERVER['QUERY_STRING'];
+#echo '<br />Session: ';
+#print_r($_SESSION);
 $p = new PagesController($request);
+#echo "bis hierhin ging's noch ganz gut...";
 echo $p->display();
-
 ?>

@@ -13,9 +13,14 @@ class Wrapper{
 	private $pdo;
 	private static $instance = null;
 	protected function __construct(){
+		try {
 		$this->pdo = new PDO(DB_PGSQL_DSN, DB_USER, DB_PASS);
 		$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
-		#echo "database connection up.";
+		echo "database connection up.";
+		} catch (PDOException $e) {
+    print "Error!: " . $e->getMessage() . "<br/>";
+    die();
+}
 	}
 	
 	public function __destruct(){}
@@ -35,6 +40,7 @@ class Wrapper{
 	
 	public function run($sql, $params = NULL){
    	$stmt = $this->pdo->prepare($sql);
+   	#echo $sql;
    	$stmt->execute($params);
    	return $stmt; 
 	}
@@ -51,11 +57,13 @@ class Wrapper{
 		}
 		$sql = "INSERT INTO ".$table." (".implode(", ",$keys).") ";
 		$sql .= "VALUES (".implode(", ",$repl).")";
-		echo $sql;
+		#echo $sql;
+		#print_r($vals);
 		$stmt = $this->pdo->prepare($sql);
 		$result = $stmt->execute($vals);
+		if($result) {echo " Wrapper: there is a result";}
 		$id = $this->pdo->lastInsertId($table.'_id_seq');
-		#print_r($result);
+		#print_r($id);
 		return $id;
 	}
 	
@@ -71,7 +79,7 @@ class Wrapper{
 		}
 		$sql = "INSERT INTO ".$table." (".implode(", ",$keys).") ";
 		$sql .= "VALUES (".implode(", ",$repl).")";
-		echo $sql;
+		#echo $sql;
 		$stmt = $this->pdo->prepare($sql);
 		$result = $stmt->execute($vals);
 		#print_r($result);
@@ -150,10 +158,10 @@ class Wrapper{
 		$sql = "DELETE FROM ".$table." WHERE ";
 		$sql .= implode(" ".$operator." ", $keys);
 		echo $sql;
-		print_r($vals);
+		#print_r($vals);
 		$stmt = $this->pdo->prepare($sql);
 		$result = $stmt->execute($vals);
-		print_r($result);
+		#print_r($result);
 		return $result;
 	}
 	

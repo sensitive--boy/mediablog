@@ -13,6 +13,7 @@ class TiAutoloader{
 		$path = 'class/';		
 		
     		require_once $path.$className.'.php';
+
     	
 	}
 	

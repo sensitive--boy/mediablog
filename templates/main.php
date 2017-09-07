@@ -1,7 +1,7 @@
 <?php
 /************
-* folder: projekt/templates
-* Aufbau eines Login-Prozesses mit MVC-Pattern und Datenbankwrapper
+* folder: tiblogs/templates
+* Aufbau einer Medienplattform mit MVC-Pattern und Datenbankwrapper
 * main.php -> Container-Template
 * @autor: Kai Noah Schirmer
 * (c) Cimi Feb/Mar 2015

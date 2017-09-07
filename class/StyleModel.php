@@ -2,13 +2,14 @@
 /************
 * folder: tiblogs/class
 * mvc multiblog project
-* tyleModel.php -> class StyleModel
+* StyleModel.php -> class StyleModel
 * simple class for loading stylesheets
 * @autor: Kai Noah Schirmer
 * (c) january 2017
 *************/
 require_once 'class/TiAutoloader.php';
 include_once 'include/functions.php';
+include_once 'nixda/settings.php';
 class StyleModel{
 	private $stylesheets = array();
 	private $layoutTable;
@@ -16,35 +17,60 @@ class StyleModel{
 	private $customStyleTable = 'styles';
 	private $wrapper;
 	private $sortopt = null;
-	private $abspath = '/var/www/html/tiblogs';
+	private $abspath = '/var/www/html/tiblogs/';
 	private $relpath = '0--x--0';
 	
 	public function __construct() {
 		$this->wrapper = Wrapper::getInstance();
 	}
 	
+	# ToDo: Think about Layout options
+	# for getting general layout
 	public function getLayout($layout) {
 		return 'css/general.css';
 	}
 	
+	# ToDo: implement display modes for accessibility reasons like strong contrasts / bw / no images / braille
 	public function getDisplayMode($mode) {
 		return 'css/general.css';
 	}
 	
-	public function createBlogStyle($blog_id) {
-		$style = new Style($blog_id);
-		return $style;
+	# I think I don't need this.
+	#public function createBlogStyle($blog_id) {
+	#	$style = new Style($blog_id);
+	#	return $style;
+	#}
+	
+	# find directory related to blog, make if doen't exist
+	public function findOrCreateStyleFolder($blog_id){
+		echo "findStyleFolder 1";
+		$dir = $this->abspath.MEDIAFOLDER;
+		echo $dir;
+		$openDir = opendir($dir."/b".$blog_id);
+		if(!$openDir) {
+			chdir($dir);
+			
+			echo mkdir("b".$blog_id, 0755) ? "Verzeichnis angelegt." : "Achtung! Verzeichnis nicht angelegt.";
+		} else {
+			echo "Verzeichnis vorhanden.";
+		}
+		closedir($openDir);
+		echo "findStyleFolder 2";
+		return $dir."/b".$blog_id;
 	}
+	
 	public function getStyleByBlogId($blog_id) {
+		echo "get Style 1";
 		$conditions = array('blog_id' => $blog_id);
 		$result = $this->wrapper->selectWhere($this->customStyleTable, $this->sortopt, $conditions)->fetch();
 		$style = new Style($result['blog_id']);
 		foreach($style->getColumnnames() as $n){
 			if(!empty($result[$n])) {
-				$function = "set".$n;
+				$function = "set".ucfirst($n);
 				$style->{$function}($result[$n]);
 			}
 		}
+		echo "get Style 2";
 		return $style;
 		
 	}
@@ -67,7 +93,7 @@ class StyleModel{
 	}
 	
 	public function test(){
-		$verz = "/var/www/html/tiblogs/0--x--0";
+		$verz = $this->abspath.MEDIAFOLDER;
 		chdir($verz);
 		echo "verzeichnis: ".$verz;
 		echo "<table border='1'>";		
@@ -90,8 +116,8 @@ class StyleModel{
 		closedir($handle);
 		echo "</table>";
 	}
-	public function writeStylesheet($style) {
-		$dir = "/var/www/html/tiblogs/0--x--0";
+	
+	public function writeStylesheet($style) {		
 		// accomplish css code
 		$css = ".content{padding:0;}.blog{width:94%;height:100%;padding: 0 3% 50px 3%;";
 		if($style->getUsebgcolor()){ $css .= "background-color:".$style->getBgcolor().";";}
@@ -101,9 +127,9 @@ class StyleModel{
 			$css .= "background-repat:repeat;";
 		}
 		$css .= "}#blogtitle{font-family:".$style->getTitlefont().";color:".$style->getTitlecolor().";}";
-		$css .= "#titleimage{max-width:100%;}";
+		$css .= "#titleimage{max-width:100%;margin-left:-20px;}";
 		$css .= "#blogdescription{font-family:".$style->getDescriptionfont().";color:".$style->getDescriptioncolor().";}";
-		$css .= ".postcontent h3{font-family:".$style->getPosttitlefont().";color:".$style->getPosttitlecolor.";}";
+		$css .= ".postcontent h3{font-family:".$style->getPosttitlefont().";color:".$style->getPosttitlecolor().";}";
 		$css .= ".postcontent p{font-family:".$style->getPosttextfont().";color:".$style->getPosttextcolor().";}";
 		if($style->getPbackopacity() > 0 || $style->getPrcorners()) {
 			$css .= ".postcontent{";
@@ -114,19 +140,13 @@ class StyleModel{
 			}
 			if($style->getPrcorners()) { $css .= "border-radius:10px;";}
 			$css .= "}";
+			$css .= "/* Wer das liest ist doof. */";
 		}
 		if(!$style->getPosticons()) { $css .= ".postimage{display:none;}";}
-
 		echo $css;
 		
 		// find directory related to blog, make if doen't exist
-		$openDir = opendir($dir."/b".$style->getBlogId());
-		if(!$openDir) {
-			chdir($dir);
-			
-			echo mkdir("b".$style->getBlogId(), 0755) ? "Verzeichnis angelegt." : "Achtung! Verzeichnis nicht angelegt.";
-		} else {
-			echo "Verzeichnis vorhanden.";
+		$openDir = opendir($this->findOrCreateStyleFolder($style->getBlogId()));
 			while($file = readdir($openDir)) {
 				if($file == 'customStyle.css') {
 					// delete old css file
@@ -135,22 +155,20 @@ class StyleModel{
 				}
 			}
 			closedir($openDir);
-		}
-		// write new css file if permission to write
-		chdir($dir."/b".$style->getBlogId());
-		#echo getcwd();
-		$file = 'customStyle.css';
-		$fp = fopen($file, "w") or die ("Datei anlegen nicht geklappt.");
+		
+			# write new css file if permission to write
+			$file = $this->abspath.MEDIAFOLDER.'b'.$style->getBlogId().'/customStyle.css';
+			$fp = fopen($file, "w") or die ("Datei anlegen nicht geklappt.");
 
-		if(!is_writable($file)){
+			if(!is_writable($file)){
+				fclose($fp);
+				die("Keine Schreibrechte vorhanden.");
+			}
+			if(fwrite($fp, $css)){
+				echo "Datei wurde geschrieben.";
+			}
 			fclose($fp);
-			die("Keine Schreibrechte vorhanden.");
-		}
-		if(fwrite($fp, $css)){
-			echo "Datei wurde geschrieben.";
-		}
-		fclose($fp);
-		chdir('/var/www/html/tiblogs');
+			chdir('/var/www/html/tiblogs');
 
 	}
 	public function getCustomStyle($blog_id) {
@@ -169,10 +187,12 @@ class StyleModel{
 			return "";
 		}
 	}
+	# toDo: return list of headline fonts containing characterset for $language
 	public function getHeadlinefontsByLanguage($language) {
 		$hfonts = array('DejaVuSans-bold', 'tahomabd', 'Everson', 'Jitzu');
 		return $hfonts;
 	}
+	# toDo: return list of text fonts containing characterset for $language
 	public function getTextfontsByLanguage($language) {
 		$tfonts = array('FreeSerif', 'sylfaen', 'chrysuni', 'EversonOblique', 'tahoma', 'DejaVuSans');
 		return $tfonts;

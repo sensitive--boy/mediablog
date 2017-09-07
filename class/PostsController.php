@@ -8,6 +8,7 @@
 * (c) january 2017
 *************/
 require_once 'class/TiAutoloader.php';
+require_once 'nixda/settings.php';
 spl_autoload_register('TiAutoloader::ClassLoader');
 class PostsController{	
 	private $model;
@@ -25,6 +26,7 @@ class PostsController{
 		$this->request = $request;
 		$this->action = $this->request['action'];
 		$this->language = $this->request['lang'];
+		#echo "++I am a new born PostsController++";
 	}
 	
 		
@@ -34,6 +36,11 @@ class PostsController{
 			case 'create':
 				if(in_array($this->request['type'], $this->model->getPostTypes())) {
 					$post = $this->model->createPost($this->request['type']);
+					if($this->request['type'] == 'video' || $this->request['type'] == 'audio') {
+						$target = $this->model->findOrCreateFolder($this->request['type'], $this->request['blog_id']);
+						echo $target;
+						$this->view->putContents('target', $target);
+					}
 					$this->view->putContents('post', $post);
 					$this->view->putContents('blog_id', $this->request['blog_id']);
 					$this->view->putContents('p_langs', $this->model->getAllLanguages());
@@ -52,14 +59,16 @@ class PostsController{
 					$post_id = $this->model->savePost($this->request);
 					if($post_id){
 						$post = $this->model->getPost($this->request['type'], $post_id);
-						$c = $this->model->saveContribution($post->getPostType(), $post->getId(), $this->request['blog_id'], $this->request['user']);
+						$cn = $this->model->saveContribution($post->getPostType(), $post->getId(), $this->request['blog_id'], $this->request['user']);
+						$c = $this->model->getContribution($cn);
 						$this->view->putContents('post', $post);
+						echo "Contribution number: ".$c->getUsername();
 						$this->view->putContents('contribution', $c);
+						$this->view->putContents('keywords', $this->model->getKeywords($post->getPostType(), $post->getId()));
 						$this->title = " | ".$post->getTitle();
 						$this->template = 'post_show';
-						echo $post->getPostType();
 					} else {
-						echo "else";
+						#echo "else";
 						// ???
 						PagesController::$notices[] = "Creating this post did not work. Please try again.";
 						$post = $this->model->getPost($this->request['type'], $this->request['id']);
@@ -71,11 +80,12 @@ class PostsController{
 				break;
 			case 'show':
 				$post = $this->model->getPost($this->request['type'], $this->request['id']);
-				echo "got post";
 				$this->view->putContents('post', $post);
+				$this->view->putContents('contribution', $this->model->getContribution($this->request['cid']));
+				$this->view->putContents('keywords', $this->model->getKeywords($post->getPostType(), $post->getId()));
 				$this->title = " | ".$post->getTitle();
 				$this->template = 'post_show';
-				echo "Wo bist du?";
+				#echo "Wo bist du?";
 				break;
 			case 'edit':
 				if(in_array($this->request['type'], $this->model->getPostTypes())) {
@@ -83,6 +93,10 @@ class PostsController{
 					$contribution = $this->model->getContribution($this->request['cid']);
 					$this->view->putContents('post', $post);
 					$this->view->putContents('contribution', $contribution);
+					$keys = $this->model->getKeywords($post->getPostType(), $post->getId());
+					echo $keys;
+					if($keys) {
+					$this->view->putContents('keywords', $keys);};
 					$this->title = " | edit '".$post->getTitle()."'";
 					$this->template = $post->getPostType().'post_edit';
 				} else {
@@ -100,16 +114,18 @@ class PostsController{
 						$contribution = $this->model->getContribution($this->request['cid']);
 						$this->view->putContents('post', $post);
 						$this->view->putContents('contribution', $contribution);
+						$this->view->putContents('keywords', $this->model->getKeywords($post->getPostType(), $post->getId()));
 						$this->title = " | ".$post->getTitle();
 						$this->template = 'post_show';
-						echo $post->getPostType();						
+						#echo $post->getPostType();						
 						#header("Location: http://localhost/tiblogs/index_.php?controller=posts&action=show&id=".$post->getId()."&type=".$post->getType()."&lang=".$this->language);
-						echo "huch!";
+						#echo "huch!";
 					} else {
-						echo "else";
+						#echo "else";
 						PagesController::$notices[] = "Edit did not work. Please try again.";
 						$post = $this->model->getPost($this->request['type'], $this->request['id']);
 						$this->view->putContents('post', $post);
+						$this->view->putContents('keywords', $this->model->getKeywords($post->getPostType(), $post->getId()));
 						$this->title = " | edit ".$post->getTitle();
 						$this->template = $post->getPostType().'post_edit';
 					}
@@ -140,6 +156,9 @@ class PostsController{
 		}
 	
 		$this->view->setTemplate($this->template);
+		echo $this->template;
+		echo " Template gesetzt. ";
+		
 		return $this->view->loadTemplate();
 	}
 	public function getTitle() {

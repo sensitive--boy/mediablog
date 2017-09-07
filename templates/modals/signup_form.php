@@ -47,7 +47,7 @@ if(isset($_POST['formSubmit']) && $_POST['formSubmit'] == "signup") {
     		$user->setEmail($email);
     		$user->setPassword($pw1);
     		$user->save();
-    		header('Location: ?controller=pages&action=aftersignup&mail='.$email.'&lang='.$lang);
+    		#header('Location: ?controller=pages&action=aftersignup&mail='.$email.'&lang='.$lang);
     	}
 }
 
@@ -62,6 +62,7 @@ echo <<<FORM_
 <div class="modal" id="signup-form">
 	<ul>$successMessage</ul>
 	<form role="form" action="?{$_SERVER['QUERY_STRING']}" method="post">
+	Next step: {$_SERVER['QUERY_STRING']}
 		<fieldset id='signupf'>
     		<legend>Sign up: </legend>
     			$message

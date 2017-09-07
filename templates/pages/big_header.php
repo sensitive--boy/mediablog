@@ -16,7 +16,7 @@ echo $_SESSION['uname'];
   <head>
   	<meta charset="UTF-8">
   	<title>tiBlogs<?php echo $this->contents['title']; ?></title>
-  	<script src="https://code.jquery.com/jquery-latest.js"></script>
+<!--  	<script src="https://code.jquery.com/jquery-latest.js"></script>-->
   	<link rel="stylesheet" type="text/css" href="plugins/Multi-Column-Select/Multi-Column-Select.css" />
   	<link rel="stylesheet" type="text/css" href="css/general.css" />
   	<link rel="stylesheet" type="text/css" href="<?php echo $this->contents['layout']; ?>" />

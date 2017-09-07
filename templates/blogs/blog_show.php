@@ -14,7 +14,8 @@ $admin = ($_SESSION['logged_in'] && $_SESSION['user']->getId() == $b->getOwner()
 
 include 'languages/'.$lang.'.php';
 include_once 'include/functions.php';
-$target_dir = '0--x--0/b'.$b->getId().'/';
+include 'nixda/settings.php';
+$target_dir = MEDIAFOLDER.'b'.$b->getId().'/';
 $allowed_image_types = array('jpg', 'jpeg', 'png', 'gif');
 $titleimage = findFileWithType($target_dir, 'header-image', $allowed_image_types);
 $backgroundimage = findFileWithType($target_dir, 'background-image', $allowed_image_types);

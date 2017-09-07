@@ -17,10 +17,12 @@ class View {
 	
 	public function __construct($path) {
 		$this->path = $path;
+		echo "I am a new View.";
 	}
 	
 	public function setTemplate($template){
 		$this->template = $template;
+		echo "I set the Template: ".$this->template;
 	}
 	
 	public function putContents($key, $value){
@@ -48,6 +50,7 @@ class View {
 	public function loadTemplate(){
 		$tpl = $this->template;
 		$file = $this->path .'/'. $tpl . '.php';
+		echo "you asked me to loadTemplate from $file .";
 		$exists = file_exists($file);
 
 		if ($exists){
@@ -62,9 +65,11 @@ class View {
 			// $output gespeichert.
 			include $file;
 			$output = ob_get_contents();
+						
 			ob_end_clean();
-				
+			echo " Template Inhalt gefunden";	
 			// Output zurückgeben.
+			echo " I do. ";
 			return $output;
 		}
 		else {

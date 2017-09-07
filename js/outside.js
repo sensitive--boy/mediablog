@@ -7,10 +7,9 @@ var modalOverlay = document.querySelector('.modal-overlay');
 
 var modalToggle1 = document.querySelector('#signin');
 var modalToggle2 = document.querySelector('#log');
-var modalToggle3 = document.querySelector('#ttlupload');
+
 modalToggle1.addEventListener('click', function(){ openModal('signup');});
 modalToggle2.addEventListener('click', function(){ openModal('login');});
-modalToggle3.addEventListener('click', function(){ openModal('ttlupload');});
 
 function openModal(m) {
 	var modal = document.querySelector('#'+m+'-form');

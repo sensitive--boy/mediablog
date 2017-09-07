@@ -36,7 +36,7 @@ class PagesController{
   							 );
 	
 	public function __construct($request){
-		echo " / PagesController";
+		#echo " / PagesController";
 		$this->view = new PageView();
 		$this->model = new StyleModel();
 		$this->request = $request;
@@ -64,6 +64,8 @@ class PagesController{
 		$this->view->putContents('layout', $this->model->getLayout($this->layout));
 		$this->view->putContents('displayMode',$this->model->getDisplayMode($this->displayMode));
 		
+							echo "Controller: ".$this->controller;
+		
 		if(isset($this->request['logout'])) { $this->logout(); }
 		if(isset($this->request['formSubmit'])) {
 			switch($this->request['formSubmit']) {
@@ -89,9 +91,11 @@ class PagesController{
     			    			    			
     			// if requested controller is pages load template directly
     			if($this->controller == 'pages') {
+    				#echo "Action: ".$this->action;
     					$this->view->setTemplate($this->action);
     					$template = $this->view->loadTemplate();
-    			} 
+    					$title = " | ".$this->action;
+    			}
     			// requested controller is not pages -> give request to referring controller
     			else {
     				switch($this->controller){
@@ -107,7 +111,10 @@ class PagesController{
     						break;
     					}
     					$template = $c->display();
+    					#echo "<br>Das sollte hier auftauchen: <br>".$template;
+    					echo "Hallo?";
     					$title = $c->getTitle();
+    					echo "aa".$title."aa";
     				}
     			} else { // show error for non valid action request
     				$title = " | Error";
@@ -118,7 +125,7 @@ class PagesController{
   				 $title = " | Error";
    			 $this->view->setTemplate('error');
       		 $template = $this->view->loadTemplate();
- 	   }
+ 	   	}
  	   
  	   // variable for the output string
 		$page = "";
@@ -136,13 +143,16 @@ class PagesController{
 			$this->view->setHeader('big_header');
 		}
 		$this->view->putContents('title', $title);
+		#echo "put header.";
 		$page .= $this->view->loadHeader();
 		
 		// add content template
+ 	  # echo "put page template"; 	   
  	   $page .= $template;
 		
 		// set and load footer template
 		$this->view->setFooter('simple_footer');
+		#echo "put footer.";		
 		$page .= $this->view->loadFooter();
 		return $page;
 	}

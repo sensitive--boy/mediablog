@@ -47,7 +47,7 @@ class BlogModel {
 		
 		$result = $this->wrapper->insert($this->table, $conditions);
 		$cons['blog_id'] = $result['id'];
-		$style = $this->wrapper->insert($this->stylestable, $cons);
+		$style = $this->wrapper->insert($this->styletable, $cons);
 		return $result;
 	}
 	
@@ -93,11 +93,13 @@ class BlogModel {
 	}
 	
 	public function getBlog($id) {
+		echo "getBlog 1";
 		$conditions=array();
 		// to do: sanitize input
 		$conditions['id'] = $id;
 		$result = $this->wrapper->selectWhere($this->table, $sortopt, $conditions, "AND")->fetch();
 		$blog = new Blog($result['id'], $result['owned_by'], $result['title'], $result['description']);
+		echo "getBlog 2";
 		return $blog;
 	}
 	
