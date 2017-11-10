@@ -7,11 +7,16 @@
 * (c) January 2017
 *************/
 session_start();
+if(!$_SESSION['uname']) {
+	header('location: index_.php');
+	exit;
+}
 	$lang = $this->contents['lang'];
 	$user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
 	$myblogs = $this->contents['blogs'];
 	include 'languages/'.$lang.'.php';
-	echo "<div class='content'>";
+	echo "<div class='content' id='mystuff'>";
+	echo "<a href='?controller=user&action=edit_info&user_id=".$user->getId()."&lang=".$this->contents['lang']."' dir='auto'>$txt_personal_info</a><br>";
 	echo "<h2 id='pagetitle' dir='auto'>$txt_own_blogs</h2>";
 	echo "<div class='ownerforms'><a href='?controller=blogs&action=create&user=".$user->getId()."&lang=".$lang."' dir='auto'>$txt_start_blog</a></div>";
 	echo "<table>";

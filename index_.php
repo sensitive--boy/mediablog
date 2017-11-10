@@ -17,8 +17,8 @@ function __autoload($classname){
 }
 session_start();
 $request = array_merge($_GET, $_POST);
-echo 'REQUEST: ';
-print_r($request);
+#echo 'REQUEST: ';
+#print_r($request);
 #phpinfo();
 #echo '<br>Query_string: '.$_SERVER['QUERY_STRING'];
 #echo '<br />Session: ';

@@ -22,17 +22,17 @@ class UserController{
 	private $goal = "";
 	
 	public function __construct($request) {
-		echo " / UserController erzeugt mit action ".$request['action'];
+		#echo " / UserController erzeugt mit action ".$request['action'];
 		$this->model = new UserModel();
 		$this->view = new View($this->templatePath);
 		$this->request = $request;
-		$this->action = $this->request['action'];
+		$this->action = !empty($this->request['action']) ? $this->request['action'] : 'login';
 		$this->language = $this->request['lang'];
 	}
 	
 		
 	public function login($n, $e, $p){
-		echo "<br />you just called login().<br />";
+		#echo "<br />you just called login().<br />";
 		$user = $this->model->getUserFromLogin($n, $e, $p);
 		
 		if(!empty($user)){
@@ -42,11 +42,9 @@ class UserController{
 			$_SESSION['uname'] = $user->getName();
 			$_SESSION['logged_in'] = 1;
 			$_SESSION['editor'] = $user->isEditor();
-			echo "Session gestartet.";
-			print_r($_SESSION);
 			return $user;
 		} else {
-			echo "keine session.";
+			#echo "keine session.";
 			self::$notices[] = "dich gibt es nicht.";
 			return false;
 		}
@@ -54,16 +52,10 @@ class UserController{
 	
 	
 	public function signup($n, $email, $p){
-		echo "<br>called signup method";
+		#echo "<br>called signup method";
 		$user = $this->model->registrateUser($n, $p, $email);
 		$loggedInUser = $this->login($user->getName(), $user->getEmail(), $user->getPassword());
-		#if(!empty($user)){
-		#	session_start();
-		#	$_SESSION['logged_in'] = true;
-			return $loggedInUser;
-		#} else {
-		#	return false;
-		#}
+		return $loggedInUser;
 	}
 	
 	public function display() {
@@ -77,21 +69,6 @@ class UserController{
 				$this->view->putContents('goal', $this->goal);
 				$this->template = 'signup_form';
 				break;
-			case 'signup':
-				#$user = $this->signup($this->request['username'], $this->request['email'], $this->request['pw2']);
-				#if($user) {
-					#$this->title = " | Welcome";
-					#$this->template = 'intern';
-					#$this->view->putContents('user', $user);
-				#}	
-				break;
-			case 'login':
-				$this->title = " | login";
-				$user = $this->model->createUser();
-				$this->view->putContents('user', $user);
-				$this->view->putContents('goal', $this->goal);
-				$this->template = 'login_form';
-				break;
 			case 'getuser':
 			echo "getuser aus UserController";
 				$user = $this->login($this->request['username'], $this->request['email'], $this->request['pass']);
@@ -100,12 +77,29 @@ class UserController{
 				$this->view->putContents('goal', $this->goal);
     			$this->template = 'intern';
 				break;
+			case 'edit_info':
+				#echo " I will allow you to edit information about you.";
+				$info = $this->model->getUserInfo($this->request['user_id']);
+				#echo " Userinfo ist da.";
+				$this->view->putContents('userinfo', $info);
+				$this->title = " | edit about me";
+				$this->template = 'about_me_edit';
+				break;
+			case 'save_info':
+				echo "save userinfo";
+				$result = $this->model->saveUserInfo($this->request);
+				if($result) {
+					header('Location:?controller=blogs&action=mystuff&user='.$this->request['user_id'].'&lang='.$this->language);
+				} else {
+					header('Location:?contoller=user&action=edit_info&user_id='.$this->request['user_id'].'&lang='.$this->language);
+				}
+				break;
 			default:
 				echo $this->action;
 				$us = $this->model->getUsers();
 				$this->view->putContents('users', $us);
 				$this->view->putContents('goal', $this->goal);
-    			echo "default: ".$this->goal;
+    			#echo "default: ".$this->goal;
 				$this->title = " | user";
 				$this->template = 'users_all';
 				break;
@@ -120,7 +114,7 @@ class UserController{
 		return $this->title;	
 	}
 	public function setGoal($goal){
-		echo "setGoal with: ".$goal;
+		#echo "setGoal with: ".$goal;
 		$this->goal = $goal;
 	}
 }

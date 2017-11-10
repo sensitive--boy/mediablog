@@ -34,7 +34,7 @@ class BlogModel {
 		}
 	} else {
 		$bloglist[] = 'albert und albert';
-		$bloglist[] = 'kaus reist aus';
+		$bloglist[] = 'klaus reist aus';
 		$bloglist[] = 'peter macht meter';
 	}
 		return $bloglist;
@@ -93,13 +93,11 @@ class BlogModel {
 	}
 	
 	public function getBlog($id) {
-		echo "getBlog 1";
 		$conditions=array();
 		// to do: sanitize input
 		$conditions['id'] = $id;
 		$result = $this->wrapper->selectWhere($this->table, $sortopt, $conditions, "AND")->fetch();
 		$blog = new Blog($result['id'], $result['owned_by'], $result['title'], $result['description']);
-		echo "getBlog 2";
 		return $blog;
 	}
 	
@@ -113,7 +111,7 @@ class BlogModel {
 			}
 		} else {
 			$bloglist[] = 'albert und albert';
-			$bloglist[] = 'kaus reist aus';
+			$bloglist[] = 'klaus reist aus';
 			$bloglist[] = 'peter macht meter';
 		}
 		return $bloglist;

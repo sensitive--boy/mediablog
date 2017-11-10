@@ -8,6 +8,9 @@ class VideoPost{
 	private $path;
 	private $filename;
 	private $filetype;
+	private $visibility;
+	private $stored_externally;
+	private $keywords;
 	
 	public function __construct($id, $title, $desc) {
 		$this->id = $id;
@@ -15,6 +18,8 @@ class VideoPost{
 		$this->description = $desc;
 		$this->published = false;
 		$this->filename = 'videofile';
+		$this->keywords = array();
+		$this->stored_externally = false;
 	}
 	
 	public function setFilePath($path) {
@@ -22,6 +27,19 @@ class VideoPost{
 	}
 	public function getFilePath() {
 		return $this->filePath;
+	}
+	public function getVlink() {
+		if($this->stored_externally) {
+			return $this->path;
+		} else {
+			return "";
+		}
+	}
+	public function setStoredExternally($bool) {
+		$this->stored_externally = (bool)$bool;
+	}
+	public function getStoredEx(){
+		return $this->stored_externally;
 	}
 	public function getId() {
 		return $this->id;
@@ -38,6 +56,12 @@ class VideoPost{
 	public function setDescription($text) {
 		$this->description = $text;
 	}
+	public function getVisibility() {
+		return $this->visibility;
+	}
+	public function setVisibility($visibility) {
+		$this->visibility = $visibility;
+	}
 	public function getPublished(){
 		return $this->published;
 	}
@@ -53,6 +77,12 @@ class VideoPost{
 	}
 	public function setPublishedAt($date){
 		$this->published_at = $date;
+	}
+	public function addKeyword($word) {
+		$this->keywords[] = $word;
+	}
+	public function getKeywords() {
+		return $this->keywords;
 	}
 	public function getPostType(){
 		return "video";

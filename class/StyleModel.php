@@ -50,17 +50,16 @@ class StyleModel{
 		if(!$openDir) {
 			chdir($dir);
 			
-			echo mkdir("b".$blog_id, 0755) ? "Verzeichnis angelegt." : "Achtung! Verzeichnis nicht angelegt.";
+			#echo mkdir("b".$blog_id, 0755) ? "Verzeichnis angelegt." : "Achtung! Verzeichnis nicht angelegt.";
 		} else {
-			echo "Verzeichnis vorhanden.";
+			#echo "Verzeichnis vorhanden.";
 		}
 		closedir($openDir);
-		echo "findStyleFolder 2";
+		#echo "findStyleFolder 2";
 		return $dir."/b".$blog_id;
 	}
 	
 	public function getStyleByBlogId($blog_id) {
-		echo "get Style 1";
 		$conditions = array('blog_id' => $blog_id);
 		$result = $this->wrapper->selectWhere($this->customStyleTable, $this->sortopt, $conditions)->fetch();
 		$style = new Style($result['blog_id']);
@@ -70,9 +69,7 @@ class StyleModel{
 				$style->{$function}($result[$n]);
 			}
 		}
-		echo "get Style 2";
-		return $style;
-		
+		return $style;		
 	}
 	public function updateStyle($request) {
 		$style = $this->getStyleByBlogId($request['id']);
@@ -119,12 +116,15 @@ class StyleModel{
 	
 	public function writeStylesheet($style) {		
 		// accomplish css code
-		$css = ".content{padding:0;}.blog{width:94%;height:100%;padding: 0 3% 50px 3%;";
+		
+		$cdiff = getColorDifference($style->getTitlecolor(), '004D47');
+		$userinfo_bgcolor = ($cdiff>300) ? $style->getTitlecolor() : 'rgb(201,201,146)';
+		$css = ".content{padding:0;}.blog, .singlepost{";
 		if($style->getUsebgcolor()){ $css .= "background-color:".$style->getBgcolor().";";}
 		if(!empty($style->getBgimage())) {
 			$css .= "background-size:cover;background-repeat:no-repeat;background-attachment:fixed;";
 		} elseif(!empty($style->getBgpattern())) {
-			$css .= "background-repat:repeat;";
+			$css .= "background-repeat:repeat;";
 		}
 		$css .= "}#blogtitle{font-family:".$style->getTitlefont().";color:".$style->getTitlecolor().";}";
 		$css .= "#titleimage{max-width:100%;margin-left:-20px;}";
@@ -140,10 +140,11 @@ class StyleModel{
 			}
 			if($style->getPrcorners()) { $css .= "border-radius:10px;";}
 			$css .= "}";
-			$css .= "/* Wer das liest ist doof. */";
 		}
 		if(!$style->getPosticons()) { $css .= ".postimage{display:none;}";}
-		echo $css;
+		$css.= "#userinfo{background-color:".$userinfo_bgcolor.";}";
+		$css .= "/* Wer das liest ist doof. Differenz: ".$cdiff." */";
+		#echo $css;
 		
 		// find directory related to blog, make if doen't exist
 		$openDir = opendir($this->findOrCreateStyleFolder($style->getBlogId()));
@@ -151,7 +152,7 @@ class StyleModel{
 				if($file == 'customStyle.css') {
 					// delete old css file
 					
-					echo "css datei gelöscht.";
+					#echo "css datei gelöscht.";
 				}
 			}
 			closedir($openDir);
@@ -165,25 +166,17 @@ class StyleModel{
 				die("Keine Schreibrechte vorhanden.");
 			}
 			if(fwrite($fp, $css)){
-				echo "Datei wurde geschrieben.";
+				#echo "Datei wurde geschrieben.";
 			}
 			fclose($fp);
 			chdir('/var/www/html/tiblogs');
 
 	}
-	public function getCustomStyle($blog_id) {
-		$dir = $this->abspath."/".$this->relpath;
-		 chdir($dir."/b".$blog_id);
-		 $file ='customStyle.css';
-		if($handle = @fopen($file, "r"))// an dieser Stelle noch auf Leseberechtigung prüfen) 
-		{
-			fclose($handle);
-			#echo "file gefunden.";
-			chdir($this->abspath);
-			return $this->relpath."/b".$blog_id."/".$file;
-		} else {
-			#echo "kein file";
-			chdir($this->abspath);
+	public function getCustomStyle($blog_id){
+		$file = MEDIAFOLDER.'b'.$blog_id.'/customStyle.css';
+		if(file_exists($file)) {
+			return $file;
+		}else {
 			return "";
 		}
 	}

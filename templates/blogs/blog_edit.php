@@ -9,7 +9,7 @@
 session_start();
 $lang = $this->contents['lang'];
 include_once 'languages/'.$lang.'.php';
-include_once '../include/functions.php';
+include_once 'include/filemagic.php';
 include_once '../nixda/settings.php';
 $message = array("Meldungen:");
 $allowed_image_types = array('jpg', 'jpeg', 'png', 'gif');

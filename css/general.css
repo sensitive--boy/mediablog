@@ -303,15 +303,31 @@ bdo[dir='ltr'], bdo[dir='rtl'] {
 .bold {
 	font-weight: bold;
 }
+.pos_right {
+	float: right;
+}
+.pos_left {
+	float: left;
+}
+.txt_right {
+	text-align: right;
+}
+.txt_left {
+	text-align: left;
+}
 /* main page */
 body {
 	background: -moz-linear-gradient(#dcdcdc, rgb(201,201,146));
 	font-size: 0.9em;
 }
 .clear {
+	display: block;
 	clear: both;
 	height: 0;
 	line-height: 0;
+}
+button:focus {
+	outline: 2px solid #a07;
 }
 
 /*********** header ***********/
@@ -330,8 +346,11 @@ header li a, header li a:visited {
 	color: #333;
 	font-weight: bold;
 }
+header li a:focus {
+	text-decoration: underline;
+	color: #a07;
+}
 #lang-menu {
-	text-align: right;
 	font-size: 0.8em;
 }
 #lang-menu img {
@@ -340,7 +359,6 @@ header li a, header li a:visited {
 }
 #loginout {
 	width: 100%;
-	text-align: right;
 	margin-top: -20px;
 	margin-left: -10px;
 	color: #333;
@@ -436,8 +454,10 @@ footer h4 {
 
 /*********** content ***********/
 
-.blog {
-	min-height: 150%;
+.blog, .singlepost {
+	float: left;
+	max-width:65%;
+	padding: 0 3% 50px 3%;
 }
 .content {
 	/*background-color: #b7b5b5;*/
@@ -447,6 +467,56 @@ footer h4 {
 .content li {
 	list-style-type: none;
 }
+.content h2 {
+	color: #a07;
+	margin-bottom: -5px;
+}
+#latest {
+	max-width: 700px;
+}
+.sidebar {
+	width: 370px;
+	color: #004D47;
+}
+.sidebar h3{
+	color: #a07;
+}
+.sidebar ul li {
+	list-style-type: circle;
+	margin-bottom: 1.3em;
+}
+.sidebar ul {
+	list-style-image: url('../gfx/list-tiblogs-ltr.png');
+}
+.sidebar.pos_left ul {
+	list-style-image: url('../gfx/list-tiblogs-rtl.png');
+}
+.sidebar a, #sidebar a:visited{
+	text-decoration: none;
+	color: #a07;
+	padding: 3px;
+}
+.sidebar a:hover, #sidebar a:focus{
+	background-color: rgba(30,110,50,0.4);
+}
+.startpost {
+	width: 250px;
+	height: 250px;
+	border: 1px solid #a07;
+	background-color: rgba(0,0,0,0.13);
+	padding: 10px;
+	margin: 5px;
+}
+.startpost video, .startpost audio{
+	width: 250px;
+}
+.startpost h3{
+	font-size: 1.2em;
+	font-weight: bold;
+}
+.startpost:last-child {
+	margin-bottom: 50px;
+}
 #titleimage {
 	max-height: 200px;
 	margin-left: -20px;
@@ -455,6 +525,10 @@ footer h4 {
 	display: table;
 	border-collapse:separate; 
 	border-spacing: 0 20px;
+	margin-bottom: 50px;
+}
+#postlist ul {
+	display: block;
 }
 #postlist li {
 	display: table-row;
@@ -509,10 +583,34 @@ label {
 #p-language {
 	
 }
-
-
-
-
+video:focus {
+	outline: 1px solid #a07;
+}
+video::-webkit-media-controls-fullscreen-button {
+  color: #a07;
+}
+#mystuff {
+	padding-left: 20px;
+}
+#mystuff h2 {
+	margin-bottom: 20px;
+	margin-top: 10px;
+}
+#mystuff table {
+	margin-bottom: 15px;
+	margin-top: 10px;
+}
+#mystuff table tr {
+	margin-bottom: 5px;
+}
+.content #userinfo {
+	width: 27%;
+	/*background-color: orange;*/
+	padding: 1%;
+}
+#avatar {
+	height: 150px;
+}
 input[type="button"],
 input[type="reset"],
 input[type="submit"] {

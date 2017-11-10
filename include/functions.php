@@ -25,21 +25,7 @@
 		return $found;
 	}
 	
-	function findFileWithType($dir, $filename, $allowed_types) {
-		if(!is_dir($dir)) { return false;
-		} else {
-		$result = false; 
-		$handle = opendir($dir);
-		while(false !== ($fname =readdir($handle))){
-			$nameparts = explode(".", $fname);
-			if($nameparts[0] == $filename && in_array($nameparts[1], $allowed_types)) {
-				$result = $fname;
-			}
-		}
-		closedir($handle);
-		return $result;
-		}
-	}
+	
 	
 	// thanks to Chris Coyier
 	function hex2rgb( $colour ) {
@@ -57,5 +43,19 @@
         $g = hexdec( $g );
         $b = hexdec( $b );
         return array( 'red' => $r, 'green' => $g, 'blue' => $b );
-}
+	}
+
+	function getColorDifference($color1, $color2) {
+		$c1 = hex2rgb($color1);
+		$c2 = hex2rgb($color2);
+		
+		return abs(($c1['red']+$c1['green']+$c1['blue']) - ($c2['red']+$c2['green']+$c2['blue']));
+	}
+
+	function checkForSession() {
+		if(!$_SESSION['uname']) {
+					header("location: index_.php");
+					exit;
+		}
+	}
 ?>

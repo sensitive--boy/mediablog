@@ -7,8 +7,12 @@ var modalOverlay = document.querySelector('.modal-overlay');
 
 var modalToggle1 = document.querySelector('#signin');
 var modalToggle2 = document.querySelector('#log');
+var modalToggle3 = document.querySelector('#signup');
 
 modalToggle1.addEventListener('click', function(){ openModal('signup');});
+if (modalToggle3 != null) {
+	modalToggle3.addEventListener('click', function(){ openModal('signup');});
+}
 modalToggle2.addEventListener('click', function(){ openModal('login');});
 
 function openModal(m) {

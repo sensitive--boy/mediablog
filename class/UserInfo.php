@@ -9,21 +9,27 @@
 class UserInfo{
 	private $id;
 	private $avatarPath;
+	private $imagedescription;
 	private $realName;
 	private $residency;
 	private $place_of_birth;
 	private $date_of_birth;
-	private $languages[];
-	private $websites[];
+	private $languages;
+	private $websites;
 	private $story;
 	private $user_id;
+	private $visibility;
 	
 	public function __construct($userID) {
 		$this->user_id = $userID;
+		#echo " UserInfo erzeugt.";
 	}
 	
 	public function getAvatarPath() {
 		return $this->avatarPath;
+	}
+	public function getImageDescription() {
+		return $this->imagedescription;
 	}
 	public function getRealName() {
 		return $this->realName;
@@ -49,9 +55,21 @@ class UserInfo{
 	public function getId() {
 		return $this->id;
 	}
+	public function getUserId() {
+		return $this->user_id;
+	}
+	public function getVisibility() {
+		return $this->visibility;
+	}
 	
-	public function getAvatarPath($path) {
+	public function setId($id){
+		$this->id = $id;
+	}
+	public function setAvatarPath($path) {
 		$this->avatarPath = $path;
+	}
+	public function setImageDescription($desc) {
+		$this->imagedescription = $desc;
 	}
 	public function setRealName($name) {
 		$this->realName = $name;
@@ -83,6 +101,8 @@ class UserInfo{
 	public function setStory($story) {
 		$this->story = $story;
 	}
-
+	public function setVisibility($visibility) {
+		$this->visibility = $visibility;
+	}
 }
 ?>

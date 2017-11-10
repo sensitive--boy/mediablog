@@ -3,6 +3,7 @@ session_save_path('include/session_store');
 session_start();
 $lang = $this->contents['lang'];
 include 'languages/'.$lang.'.php';
+$contra_pos = ($dir == 'ltr') ? 'right' : 'left';
 #putenv("LANG=".$lang);
 #setlocale(LC_ALL, $lang);
 #$domain = "messages";
@@ -25,8 +26,11 @@ echo $_SESSION['uname'];
   </head>
   <body>
     <header>
-    	<div id="lang-menu">
-    		<?php $link = explode("lang=", $_SERVER["REQUEST_URI"]); ?>
+    	<div id="lang-menu" class="txt_<?php echo $contra_pos; ?>">
+    		<?php 
+    			$link = explode("lang=", $_SERVER["REQUEST_URI"]); 
+    			if(sizeof($link)<2) { $link[0] .= "?";}
+    		?>
       <ul>
         <li><a href="<?php echo $link[0]; ?>lang=de_DE"><img src="gfx/pung<?php if($lang=="de_DE") echo 'a'; ?>.png" />Deutsch</a></li>
 		  	<li><a href="<?php echo $link[0]; ?>lang=en_GB"><img src="gfx/pung<?php if($lang=="en_GB") echo 'a'; ?>.png" />English</a></li>
@@ -40,7 +44,7 @@ echo $_SESSION['uname'];
        <!-- <li><a href="<?php echo $link[0]; ?>lang=fa_IR"><img src="gfx/pung<?php if($lang=="fa_IR") echo 'a'; ?>.png" />فارسی</a></li>-->
       </ul>
     	</div>
-    	<div id="loginout">
+    	<div id="loginout" class="txt_<?php echo $contra_pos; ?>">
       <?php if(isset($_SESSION['logged_in']) && $_SESSION['logged_in']) { 
       			echo $txt_logged_in.$_SESSION['uname'].". ";
       			echo "<a href='?logout=true&".$_SERVER['QUERY_STRING']."'>$txt_logout</a>";
@@ -52,13 +56,13 @@ echo $_SESSION['uname'];
       ?>
     	</div>
       <div id="logo"><a href='/tiblogs/index_.php?lang=<?php echo $lang; ?>'><img src="gfx/tiblogs.png" alt="<?php echo $txt_logo_alt; ?>" /></a></div>
-      <div class="nav main">
+      <!--<div class="nav main">
       <ul>
-      	<li><a href='/tiblogs/index_.php?lang=<?php echo $lang; ?>'><?php echo $nav_home; ?></a></li>
-      	<li><a href='?controller=blogs&action=index&lang=<?php echo $lang; ?>'><?php echo $nav_blogs; ?></a></li>
-      	<li><a href='?controller=user&action=index&lang=<?php echo $lang; ?>'><?php echo $nav_users; ?></a></li>
+      	<li><a href='/tiblogs/index_.php?lang=<?php #echo $lang; ?>'><?php #echo $nav_home; ?></a></li>
+      	<li><a href='?controller=blogs&action=index&lang=<?php #echo $lang; ?>'><?php #echo $nav_blogs; ?></a></li>
+      	<li><a href='?controller=user&action=index&lang=<?php #echo $lang; ?>'><?php #echo $nav_users; ?></a></li>
       </ul>
-      </div>
+      </div>-->
       <ul>
       	<?php foreach($this->getContents['notices'] as $notice){
       		echo "<li>$notice</li>";

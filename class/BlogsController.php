@@ -23,7 +23,7 @@ class BlogsController{
 	private $goal = "";
 	
 	public function __construct($request) {		
-		echo "<br>Es ist ein BlogsController!";
+		#echo "<br>Es ist ein BlogsController!";
 		$this->model = new BlogModel();
 		$this->styleModel = new StyleModel();
 		$this->view = new View($this->templatePath);
@@ -36,6 +36,7 @@ class BlogsController{
 		$this->view->putContents('lang', $this->language);
 		switch($this->action) {
 			case 'create':
+				checkForSession();
 				echo $this->action;
 				$newblog = $this->model->createBlog();
 				$this->view->putContents('blog', $newblog);
@@ -43,32 +44,44 @@ class BlogsController{
 				$this->template = 'blog_new';
 				break;
 			case 'show':
-				echo $this->action;
+				#echo $this->action;
 				$blog = $this->model->getBlog($this->request['id']);
-				echo "Ha! ein Bloog!";
+				#echo "Ha! ein Bloog! it belongs to user nr.".$blog->getOwner();
 				$pm = new PostModel();
 				$contributions = $pm->getContributionsByBlog($this->request['id']);
-				echo "got contributions ::::";
+				#echo "got contributions ::::";
 				$posts = $pm->getPostsByBlogId($this->request['id']);
 				$style = $this->styleModel->getStyleByBlogId($this->request['id']);
 				$this->view->putContents('blog', $blog);
 				$this->view->putContents('contributions', $contributions);
 				$this->view->putContents('posts', $posts);
 				$this->view->putContents('style', $style);
+				$um = new UserModel();
+				$userinfo = $um->getUserInfo($blog->getOwner());
+				if($userinfo->getVisibility() == 'is_public') { #add members if logged in or friends
+					#echo '--UserInfo is public--';
+					$this->view->putContents('userinfo', $userinfo);
+					$user = $um->getUser($blog->getOwner());
+					#print_r($user);
+					$username = $user->getName();
+					$this->view->putContents('username', $username);
+				}
 				$this->title = " | ".$blog->getTitle();
 				$this->template = 'blog_show';
 				break;
 			case 'new':
+				checkForSession();
 				$blog_id = $this->model->saveBlog($this->request);
 				$blog = $this->model->getBlog($blog_id);
 				if(!empty($blog)) {
-					header("Location: http://localhost/tiblogs/index_.php?controller=blogs&action=show&id=".$blog->getId()."&lang=".$this->language);
+					header("Location: ?controller=blogs&action=show&id=".$blog->getId()."&lang=".$this->language);
 				} else {
 					$this->title = " | Error";
 					$this->template = 'error';
 				}
 				break;
 			case 'edit':
+				checkForSession();
 				$blog = $this->model->getBlog($this->request['id']);
 				$style = $this->styleModel->getStyleByBlogId($this->request['id']);
 				if(!empty($blog)) {
@@ -76,25 +89,22 @@ class BlogsController{
 					$this->view->putContents('style', $style);
 					$this->view->putContents('stylefolder', $this->styleModel->findOrCreateStyleFolder($blog->getId()));
 					$this->view->putContents('hfonts', $this->styleModel->getHeadlinefontsByLanguage($this->language));
-					echo "<br>fellow 3";
 					$this->view->putContents('tfonts', $this->styleModel->getTextfontsByLanguage($this->language));
-					echo "<br>fellow 4";
 					$this->title = " | ".$blog->getTitle();
 					$this->template = 'blog_edit';
 				} else {
-					echo "<br>fellow 19";
 					$this->title = " | Error";
 					$this->template = 'error';
 				}
 				break;
 			case 'update':
-			echo "hello update";
+			#echo "hello update";
 				$blog = $this->model->updateBlog($this->request);
 				if($blog) {
 					$b = $this->model->getBlog($this->request['id']);
-					$s = $this->styleModel->getStyleByBlogId($b->getId());
+					$s = $this->styleModel->getStyleByBlogId($b->getId());				
 					$this->styleModel->writeStylesheet($s);					
-					header("Location: http://localhost/tiblogs/index_.php?controller=blogs&action=show&id=".$this->request['id']."&lang=".$this->language);
+					header("Location: ?controller=blogs&action=show&id=".$this->request['id']."&lang=".$this->language);
 				} else {
 					PagesController::$notices[] = "Edit did not work. Please try again.";
 					$blog = $this->model->getBlog($this->request['id']);
@@ -111,6 +121,7 @@ class BlogsController{
 				}
 				break;
 			case 'mystuff':
+				checkForSession();
 				$blogs = $this->model->getBlogsByUser($this->request['user']);
 				$this->view->putContents('blogs', $blogs);
 				$pm = new PostModel();
@@ -121,7 +132,7 @@ class BlogsController{
 				$this->template = 'blogs_my';
 				break;
 			default:
-				echo $this->action;
+				#echo $this->action;
 				$blogs = $this->model->getBlogs();
 				$this->view->putContents('blogs', $blogs);
 				$this->title = " | blogs";

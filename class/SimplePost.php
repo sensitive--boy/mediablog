@@ -5,13 +5,16 @@ class SimplePost{
 	private $description;
 	private $published;
 	private $published_at;
+	private $visibility;
+	private $keywords;
 	
 	public function __construct($id, $title, $description) {
-		echo "ich bin (nicht) simple.";
+		#echo "ich bin (nicht) simple.";
 		$this->id = $id;
 		$this->title = $title;
 		$this->description = $description;
 		$this->published = false;
+		$this->keywords = array();
 	}
 	public function getId() {
 		return $this->id;
@@ -28,6 +31,12 @@ class SimplePost{
 	public function setDescription($text) {
 		$this->description = $text;
 	}
+	public function getVisibility() {
+		return $this->visibility;
+	}
+	public function setVisibility($visibility) {
+		$this->visibility = $visibility;
+	}
 	public function getPublished(){
 		return $this->published;
 	}
@@ -43,6 +52,12 @@ class SimplePost{
 	}
 	public function setPublishedAt($date){
 		$this->published_at = $date;
+	}
+	public function addKeyword($word) {
+		$this->keywords[] = $word;
+	}
+	public function getKeywords() {
+		return $this->keywords;
 	}
 	public function getPostType(){
 		return "simple";

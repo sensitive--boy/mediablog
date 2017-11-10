@@ -31,7 +31,7 @@ class PagesController{
   	// we consider those "allowed" values
   	private $controllers = array('pages' => ['home', 'error', 'contact', 'imprint', 'faq', 'privacy', 'funding'],
   							  'blogs' => ['index', 'show', 'create', 'edit', 'mystuff', 'new', 'update'],
-  							  'user' => ['index', 'show', 'new'],
+  							  'user' => ['index', 'show', 'new', 'edit_info', 'save_info'],
   							  'posts' => ['index', 'show', 'create', 'update', 'edit', 'save', delete]
   							 );
 	
@@ -54,7 +54,7 @@ class PagesController{
 		$_SESSION['logged_in'] = false;
 		session_destroy();
 		$_SESSION = array();
-		echo "logout";
+		#echo "logout";
 	}
 	
 	public function display(){		
@@ -64,15 +64,20 @@ class PagesController{
 		$this->view->putContents('layout', $this->model->getLayout($this->layout));
 		$this->view->putContents('displayMode',$this->model->getDisplayMode($this->displayMode));
 		
-							echo "Controller: ".$this->controller;
+							#echo "Controller: ".$this->controller;
 		
 		if(isset($this->request['logout'])) { $this->logout(); }
 		if(isset($this->request['formSubmit'])) {
 			switch($this->request['formSubmit']) {
 				case 'signup':
+					echo explode('?', $_SERVER[REQUEST_URI])[1];
 					$uc = new UserController($this->request);
 					$user = $uc->signup($this->request['username'],  $this->request['email'], $this->request['pw2']);
-					$this->view->putContents('user', $user);
+					if($user) {
+						$this->view->putContents('user', $user);
+					}
+					# reload page no matter if signup worked -> needs feedback in case of failure
+					header("Location:?".explode('?', $_SERVER[REQUEST_URI])[1]);
 					break;
 				case 'login':
 					$uc = new UserController($this->request);
@@ -92,6 +97,14 @@ class PagesController{
     			// if requested controller is pages load template directly
     			if($this->controller == 'pages') {
     				#echo "Action: ".$this->action;
+    				if($this->action == 'home') {
+    					$m = new PostModel();
+    					# if logged in, get all posts else get only public posts
+    					$visibility = (isset($_SESSION['uname']) && !empty($_SESSION['uname'])) ? 'all' : 'public';
+    					#echo "visibility is: ".$visibility;
+    					$contributions = $m->getLatest('all', $visibility, STARTPOSTS);
+    					$this->view->putContents('contributions', $contributions);
+    				}
     					$this->view->setTemplate($this->action);
     					$template = $this->view->loadTemplate();
     					$title = " | ".$this->action;
@@ -111,10 +124,12 @@ class PagesController{
     						break;
     					}
     					$template = $c->display();
-    					#echo "<br>Das sollte hier auftauchen: <br>".$template;
-    					echo "Hallo?";
+    					if($this->controller == 'posts' && !empty($c->getCustomStyle())){
+								$this->view->putContents('cStyle', $c->getCustomStyle());
+								$this->view->putContents('customStyle', $c->getCustomStylesheet()); 						
+    					}
+    					else {}
     					$title = $c->getTitle();
-    					echo "aa".$title."aa";
     				}
     			} else { // show error for non valid action request
     				$title = " | Error";
@@ -129,7 +144,7 @@ class PagesController{
  	   
  	   // variable for the output string
 		$page = "";
-		
+
 		if(!$this->view->readContents()['user']) {
 			$um = new UserModel();
 			$user = $um->createUser();
@@ -137,22 +152,19 @@ class PagesController{
 		}
 		
 		// set and load header template
-		if($this->controller === 'blogs' && $this->action === 'show') {
+		if(($this->controller === 'blogs' && $this->action === 'show') || $this->controller === 'posts') {
 			$this->view->setHeader('small_header');
 		} else {
 			$this->view->setHeader('big_header');
 		}
 		$this->view->putContents('title', $title);
-		#echo "put header.";
 		$page .= $this->view->loadHeader();
 		
-		// add content template
- 	  # echo "put page template"; 	   
+		// add content template	   
  	   $page .= $template;
 		
 		// set and load footer template
-		$this->view->setFooter('simple_footer');
-		#echo "put footer.";		
+		$this->view->setFooter('simple_footer');	
 		$page .= $this->view->loadFooter();
 		return $page;
 	}

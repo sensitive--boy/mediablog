@@ -17,7 +17,7 @@ echo "<div class='modal' id='login-form'>";
 	<input type="hidden" name="goal" value="" />
 	<input type="submit" name="formSubmit" id="login-button" value="login" />
 	<br /><br />
-	<a href="?controller=user&action=create&lang=$lang">I want to create a new account.</a>
+	<a href="javascript:function{openModal('signup')}">I want to create a new account.</a>
 	</fieldset>
 	</form>
 FORM_;

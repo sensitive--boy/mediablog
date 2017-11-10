@@ -19,6 +19,10 @@ $keys = isset($this->contents['keywords']) ? implode(", ", $this->contents['keyw
 $p_langs = $this->contents['p_langs'];
 $split = $p_langs.length;
 
+$is_public = ($this->contents['post']->getVisibility() == 'is_public') ? 'checked' : '';
+$members_only = ($this->contents['post']->getVisibility() == 'members_only') ? 'checked' : '';
+$friends_only = ($this->contents['post']->getVisibility() == 'friends_only') ? 'checked' : '';
+
 $user = $_SESSION['user']->getId();
 echo "<div class='content'>";
 $f1 = <<<FORM1
@@ -47,6 +51,10 @@ $f2 = "
     		<input type='hidden' name='blog_id' value='".$blog_id."' />
     		<input type='hidden' name ='id' value='".$id."' />
     		<input type='hidden' name='user' value='".$user."' /><br><br>
+    		<label for='visibility'>$txt_this_post_is_for</label>
+    		<input type='radio' name='visibility' id='visibility' value='is_public' $is_public /> everyone &nbsp;
+    		<input type='radio' name='visibility' id='visibility' value='members_only' $members_only /> members only &nbsp;
+    		<input type='radio' name='visibility' id='visibility' value='friends_only' $friends_only /> friends only<br><br>
     		<input type='checkbox' id='published' name='published' checked /><text dir='auto'> publish imediately</text><br><br>
 			<input type='submit' value='save post' dir='auto' />
 		</fieldset>

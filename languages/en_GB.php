@@ -17,6 +17,7 @@ $nav_users = 'User';
 $txt_welcome = 'Welcome to tiBlogs';
 $txt_subline = 'accessible media content about trans*, inter* and non-binary lives';
 $txt_start_title = '';
+$txt_here_you_find = 'Here you can find';
 
 $txt_error_no_template = "We are sorry. We couldn't find a page matching your request.";
 
@@ -26,11 +27,30 @@ $nav_data_security = 'data use';
 $nav_faq = 'f.a.q.';
 $nav_supported = 'supported by';
 
+$nav_legal_info = 'Legal information on trans* and inter* rights';
+$nav_tutorials = 'Tutorials and Workshops on media production';
+$nav_rules_public_media = 'Rules for public media requests';
+$nav_howto = 'Information about how to use and contribute to this website';
+$nav_full_search = 'A grown up search tool';
+
 $txt_name = 'Name';
 $txt_username = 'Username';
 $txt_email = 'Email address';
 $txt_password = 'Password';
 $txt_repeat_pass = 'Repeat password';
+
+$txt_personal_info = 'Personal or project information';
+$txt_upload_avimage = 'Upload new avatar image';
+$txt_send_avimage = 'Upload this file as avatar';
+$txt_image_description = 'Image description (describe what is to be seen in the image)';
+$txt_personal_what_to_share = 'If you want to share this information this is the place to write something about yourself or your project.<br>
+    		Information of interest could be <ul><li>where you come from or </li><li>where you are currently living, </li><li>what topics you are interested in 
+    		or you are going to publish about, </li><li>if or how you define your gender, </li><li>your or the projects age, </li><li>if you are part / member of or working in an 
+    		organisation, </li><li>links to your other websites</li><li> ...</li></ul>';
+$txt_personal_fullname = 'Your full name';
+$txt_personal_languages = 'Languages you speak or use in your project (separated by ,)';
+$txt_personal_websites = 'Other Websites you use to publish (sepatated by ,)';
+$txt_this_info_is_for = 'This information should be visible for';
 
 $txt_heading_all_blogs = 'These are all blogs';
 $txt_no_blogs_yet = 'you have no blogs yet.';
@@ -74,13 +94,17 @@ $txt_create_post = 'Create new post';
 $txt_post_languages = 'What languages will be used in your post?';
 $txt_edit_post = 'edit post';
 $txt_delete_post = 'delete this post';
+$txt_latest_posts = 'See what is new:';
+$txt_posted_by = 'posted by:';
+$txt_this_post_is_for = 'This post should be visible for:';
 
-$txt_written_by = 'written by';
+$txt_written_by = 'written by:';
 $txt_published = 'published';
 $txt_published_at = 'published on';
 $txt_title = 'title';
 $txt_text = 'text';
 $txt_description = 'description';
+$txt_keys = 'Tags';
 $txt_keywords = 'keywords (please separate by comma)';
 $txt_author = 'author(s)';
 $txt_publisher = 'publisher';
@@ -89,6 +113,9 @@ $txt_isbn = 'ISBN';
 
 $txt_upload_video = 'Upload video';
 $txt_send_video = 'Upload this video';
+$txt_paste_vlink = 'paste url of youtube, vimeo or other externally stored video';
+$txt_caption_hint = 'To add caption or subtitle files follow the "edit post" link after creating this post.'; 
+$txt_be_patient = 'If your video is strored externally it might take a while to show up, depending on your internet quality. Be patient.';
 
 $txt_save_changes = 'save changes';
 

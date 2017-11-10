@@ -44,7 +44,6 @@ class PageView {
 		$exists = file_exists($file);
 
 		if ($exists){
-			echo " yes, sim. ";
 			ob_start();
 			include $file;
 			$output = ob_get_contents();
@@ -74,7 +73,6 @@ class PageView {
 			include $file;
 			$output = ob_get_contents();
 			ob_end_clean();
-			echo " yes, sim. ";
 			// Output zurückgeben.
 			return $output;
 		}
@@ -94,7 +92,6 @@ class PageView {
 			include $file;
 			$output = ob_get_contents();
 			ob_end_clean();
-			echo " yes, sim. ";
 			return $output;
 		} else {
 			// Template-File existiert nicht-> Fehlermeldung.
